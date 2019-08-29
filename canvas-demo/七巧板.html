@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>七巧板</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持canvas，请切换浏览器尝试
+  </canvas>
+</body>
+<script>
+  // canvas 2d 是基于状态的绘制
+  const arr = [
+    {p:[{x:0,y:0},{x:800,y:0},{x:400,y:400}],color:'#caff67'},
+    {p:[{x:0,y:0},{x:400,y:400},{x:0,y:800}],color:'#67becf'},
+    {p:[{x:800,y:0},{x:800,y:400},{x:600,y:600},{x:600,y:200}],color:'#ef3d61'},
+    {p:[{x:600,y:200},{x:600,y:600},{x:400,y:400}],color:'#f9f51a'},
+    {p:[{x:400,y:400},{x:600,y:600},{x:400,y:800},{x:200,y:600}],color:'#a594c0'},
+    {p:[{x:200,y:600},{x:400,y:800},{x:0,y:800}],color:'#fa8ecc'},
+    {p:[{x:800,y:400},{x:800,y:800},{x:400,y:800}],color:'#f6ca29'}
+  ]
+
+  window.onload = function () {
+    const canvas = document.getElementById('canvas')
+    canvas.width = 800
+    canvas.height = 800
+    const context = canvas.getContext('2d');
+    arr.forEach((item,index)=>{
+      draw(item,context)
+    })
+  }
+
+  function draw(item,context){
+    context.beginPath()
+    context.moveTo(item.p[0].x,item.p[0].y)
+    const l = item.p.length
+    for(let i = 1;i< l;i++){
+      context.lineTo(item.p[i].x,item.p[i].y)
+    }
+    context.closePath()
+
+    context.fillStyle = item.color
+    context.fill()
+
+    context.lineWidth = 4
+    context.strokeStyle='#333'
+    
+    context.stroke()
+  }
+
+</script>
+</html>

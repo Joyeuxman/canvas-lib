@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>碰撞的小球</title>
+  <style>
+    #canvas{
+      border: 2px solid #333;
+    }
+  </style>
+</head>
+<body>
+    <canvas id="canvas">
+        当前浏览器不支持canvas,请切换浏览器再试
+      </canvas>
+
+      <script>
+        const W = 800 // canvas height
+        const H = 400 // canvas weight
+        const R = 20  // 小球半径
+        var ball = {
+          x: 600,
+          y: 100,
+          r: R,
+          g: 2,
+          vx: -20,
+          vy: -20,
+          color: '#ff0000'
+        }
+      window.onload = function() {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = W;
+        canvas.height = H;
+
+        setInterval(() => {
+          render(ctx)
+          update(ctx)
+        }, 50);
+      };
+
+      function render(ctx){
+        ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height)
+
+        ctx.fillStyle = ball.color
+        ctx.beginPath()
+        ctx.arc(ball.x,ball.y,ball.r,0,2*Math.PI)
+        ctx.closePath()
+
+        ctx.fill()
+      }
+
+      function update(ctx){
+        ball.x += ball.vx
+        ball.y += ball.vy
+        ball.vy += ball.g
+
+        console.log('x===',ball.x)
+        console.log('y===',ball.y)
+
+        // 碰撞检测
+        // 上边缘
+        if(ball.y < R){
+          ball.y = R
+          ball.vy = -ball.vy * 1
+        }
+        // 下边缘
+        if(ball.y > (H - R)){
+          ball.y = H - R
+          ball.vy = -ball.vy * 1
+        }
+        // 左边缘
+        if(ball.x < R){
+          ball.x = R
+          ball.vx = -ball.vx * 1
+        }
+        // 右边缘
+        if(ball.x > W -R){
+          ball.x = W - R
+          ball.vx = -ball.vx * 1
+        }
+      }
+      </script>
+</body>
+</html>
